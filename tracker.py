@@ -1,6 +1,17 @@
 expenses = []
 
 def add_exp(amount: float, category: str, description: str = ""):
+    """Добавляет новый расход в систему.
+    Параметры:
+        - amount (float): Сумма расхода. Должна быть положительным числом.
+        - category (str): Категория расхода (например, "Еда", "Транспорт"). Не может быть пустой строкой.
+        - description (str, optional): Детали расхода. По умолчанию "".
+    Возвращает:
+        None: Функция ничего не возвращает.
+    Исключения:
+        ValueError: Вызывается, если:
+            - amount не является положительным числом
+            - category пустая строк"""
     if not isinstance(amount, (int, float)) or amount <= 0:
         raise ValueError("Сумма должна быть положительной")
     if not category.strip():
@@ -15,15 +26,21 @@ def add_exp(amount: float, category: str, description: str = ""):
 expenses = []
 
 def get_exp():
-    """Возвращает список всех расходов."""
+    """Возвращает полный список всех расходов:
+        list[dict]: Список словарей, каждый словарь содержит:
+            - 'amount' (float): сумма
+            - 'category' (str): категория
+            - 'description' (str): описание"""
     return expenses.copy()
-
 def get_total():
-    """Возвращает общую сумму всех расходов."""
+    """Вычисляет общую сумму всех расходов
+    Возвращает:
+        - float: Сумма всех расходов. 0.0 если список пуст."""
     return sum(item['amount'] for item in expenses)
 
 def get_category(category):
-    """Возвращает расходы указанной категории."""
+    """Фильтрует расходы по указанной категории
+    Параметры: category (str): Категория для поиска (например, "Еда")."""
     filtered_expenses = []
     category_lower = category.lower()
     
@@ -35,5 +52,7 @@ def get_category(category):
     return filtered_expenses
 
 def reset_exp():
-    """Очищает список расходов."""
+    """Сбрасывает все данные о расходах.
+    Удаляет все внесённые расходы без возможности восстановления
+    """
     expenses.clear()
